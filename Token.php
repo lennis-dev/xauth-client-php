@@ -9,6 +9,7 @@ class Token
     private string $sign;
     private string $server;
     private string $username;
+    private string $application;
 
     public function __construct(string $token)
     {
@@ -35,6 +36,7 @@ class Token
         $response = json_decode($result, true);
         if ($response["success"] !== true) throw new \Exception("Invalid token");
         $this->username = $this->data["username"];
+        $this->application = $this->data["application"];
     }
 
     public function getAuthServer(): string
@@ -45,5 +47,10 @@ class Token
     public function getUsername(): string
     {
         return $this->username;
+    }
+
+    public function getApplication(): string
+    {
+        return $this->application;
     }
 }

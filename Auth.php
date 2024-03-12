@@ -21,12 +21,13 @@ class Auth
 
     public static function identify(): string
     {
-        return self::identifyToken($_POST["token"]);
+        return self::identifyToken($_POST["token"], $_SERVER["SERVER_NAME"]);
     }
 
-    public static function identifyToken(string $token): string
+    public static function identifyToken(string $token, string $application): string
     {
         $tokenObj = new Token($token);
+        if ($tokenObj->getApplication() !== $application) throw new \Exception("Invalid token");
         return $tokenObj->getUsername() . "@" . $tokenObj->getAuthServer();
     }
 }
